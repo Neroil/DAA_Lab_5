@@ -7,6 +7,10 @@ android {
     namespace = "ch.heigvd.iict.daa.template"
     compileSdk = 34
 
+    buildFeatures{
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "ch.heigvd.iict.daa.basictemplate"
         minSdk = 26
