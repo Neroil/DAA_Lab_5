@@ -1,6 +1,7 @@
 package ch.heigvd.iict.daa.template
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import ch.heigvd.iict.daa.template.databinding.ActivityMainBinding
 
@@ -17,5 +18,12 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = ImageRVAdapter()
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 }
