@@ -22,15 +22,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var adapter = ImageRVAdapter(this.lifecycleScope, cacheDir)
-        //imageDownloader = ImageDownloader(cacheDir)
         val recyclerView = binding.recyclerView
         imageAdapter = ImageRVAdapter(this.lifecycleScope, cacheDir)
         recyclerView.apply{
             adapter = imageAdapter
             layoutManager = GridLayoutManager(context, 3) //TODO PAS EN HARDCODE LE 3 SVP
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,10 +40,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected (item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.main_menu_refresh -> {
-                //lifecycleScope.launch { imageDownloader.clearCache() }
+                imageAdapter.clearCache()
                 true
             }
             else -> super.onOptionsItemSelected (item)
         }
     }
+
+
 }

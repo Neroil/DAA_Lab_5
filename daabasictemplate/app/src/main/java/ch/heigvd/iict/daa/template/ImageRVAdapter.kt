@@ -25,6 +25,12 @@ class ImageRVAdapter(private val lifecycle: LifecycleCoroutineScope, private val
         return ViewHolder(NumberListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
+    fun clearCache() {
+        lifecycle.launch {
+            imageDownloader.clearCache()
+        }
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
     }
