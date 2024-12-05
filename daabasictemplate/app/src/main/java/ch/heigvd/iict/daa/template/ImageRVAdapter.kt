@@ -37,17 +37,13 @@ class ImageRVAdapter(private val lifecycle: LifecycleCoroutineScope, private val
 
     inner class ViewHolder(private val binding: NumberListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int){
-
             lifecycle.launch {
-                //withContext avant ? mis par le prof au début
                 val image = imageDownloader.getImage(position)
                 withContext(Dispatchers.Main) {
                     binding.apply {
-                        with(image){
-                            numberImage.setImageBitmap(image)
-                            numberImage.visibility = View.VISIBLE
-                            progressCircular.visibility = View.GONE
-                        }
+                        numberImage.setImageBitmap(image)
+                        numberImage.visibility = View.VISIBLE
+                        progressCircular.visibility = View.GONE
                     }
                 }
             }

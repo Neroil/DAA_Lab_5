@@ -30,7 +30,7 @@ class ImageDownloader {
     }
 
     suspend fun clearCache() = withContext(Dispatchers.IO) {
-        Log.d(TAG, "Clearing cache")
+        Log.d(TAG, "Clearing cache of size: ${cacheDir.listFiles()?.size}" )
         for(file in cacheDir.listFiles()!!) {
             file.delete()
         }

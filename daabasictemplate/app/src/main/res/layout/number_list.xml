@@ -10,9 +10,9 @@
         android:id="@+id/number_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/numero"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/hotdog_dog"
         android:visibility="gone"/>
 
     <ProgressBar
