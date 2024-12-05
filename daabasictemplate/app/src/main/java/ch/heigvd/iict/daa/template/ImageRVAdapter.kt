@@ -1,5 +1,6 @@
 package ch.heigvd.iict.daa.template
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ class ImageRVAdapter(private val lifecycle: LifecycleCoroutineScope, private val
     fun clearCache() {
         lifecycle.launch {
             imageDownloader.clearCache()
+            notifyDataSetChanged()
         }
     }
 
