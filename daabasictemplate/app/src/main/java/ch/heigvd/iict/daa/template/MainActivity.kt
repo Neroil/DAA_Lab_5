@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imageAdapter : ImageRVAdapter
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var imageDownloader: ImageDownloader
+    //private lateinit var imageDownloader: ImageDownloader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         var adapter = ImageRVAdapter(this.lifecycleScope, cacheDir)
-        imageDownloader = ImageDownloader(cacheDir)
+        //imageDownloader = ImageDownloader(cacheDir)
         val recyclerView = binding.recyclerView
         imageAdapter = ImageRVAdapter(this.lifecycleScope, cacheDir)
         recyclerView.apply{
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected (item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.main_menu_refresh -> {
-                lifecycleScope.launch { imageDownloader.clearCache() }
+                //lifecycleScope.launch { imageDownloader.clearCache() }
                 true
             }
             else -> super.onOptionsItemSelected (item)
