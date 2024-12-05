@@ -29,6 +29,13 @@ class ImageDownloader {
         }
     }
 
+    suspend fun clearCache() = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Clearing cache")
+        for(file in cacheDir.listFiles()!!) {
+            file.delete()
+        }
+    }
+
     private suspend fun downloadImage(number: Int): ByteArray? = withContext(Dispatchers.IO) {
         try {
             val url = URL("https://daa.iict.ch/images/$number.jpg")
@@ -53,7 +60,7 @@ class ImageDownloader {
 
     suspend fun getImage(number: Int): Bitmap? {
         val file = File(cacheDir, "$number.jpg")
-        var bytes: ByteArray
+        val bytes: ByteArray
 
         if (file.exists()) {
             bytes = file.readBytes()
