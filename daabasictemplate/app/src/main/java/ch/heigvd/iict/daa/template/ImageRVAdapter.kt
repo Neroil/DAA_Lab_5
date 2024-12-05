@@ -1,59 +1,48 @@
 package ch.heigvd.iict.daa.template
 
 import android.graphics.Bitmap
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Visibility
+import ch.heigvd.iict.daa.template.databinding.NumberListBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ImageRVAdapter(_items : List<Bitmap> = listOf()) : RecyclerView.Adapter<ImageRVAdapter.ViewHolder>() {
-    var items = listOf<Bitmap>()
-        set(value) {
-            val diffCallback = ImageDiffCallback(items, value)
-            val diffItems = DiffUtil.calculateDiff(diffCallback)
-            field = value
-            diffItems.dispatchUpdatesTo(this)
-        }
-
-    init {
-        items = _items
-    }
-
-    override fun getItemCount() = items.size
-
-    override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-    }
-
-    companion object {
-        private val IMAGE = 1
-    }
+class ImageRVAdapter(private val lifecycle: LifecycleCoroutineScope) : RecyclerView.Adapter<ImageRVAdapter.ViewHolder>() {
+    override fun getItemCount() = 10000
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageRVAdapter.ViewHolder {
-
+        return ViewHolder(NumberListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun onBindViewHolder(holder: ImageRVAdapter.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(position)
     }
 
-    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(private val binding: NumberListBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(position: Int){
 
+            lifecycle.launch {
+                //withContext avant ? mis par le prof au début
+                val image = ImageDownloader.getImage(position)
+                withContext(Dispatchers.Main) {
+                    binding.apply {
+                        with(image){
+                            numberImage.setImageBitmap(image)
+                            numberImage.visibility = View.VISIBLE
+                            progressCircular.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
-}
-
-
-class ImageDiffCallback(private val oldList: List<Bitmap>, private val newList: List<Bitmap>) : DiffUtil.Callback() {
-    override fun getOldListSize() = oldList.size
-    override fun getNewListSize() = newList.size
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList.get(newItemPosition)
-    }
-    override fun areContentsTheSame(oldItemPosition : Int, newItemPosition : Int): Boolean {
-        val old = oldList[oldItemPosition]
-        val new = newList[newItemPosition]
-        return old::class == new::class
-    }
 }

@@ -3,9 +3,13 @@ package ch.heigvd.iict.daa.template
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import ch.heigvd.iict.daa.template.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var imageAdapter : ImageRVAdapter
 
     private lateinit var binding: ActivityMainBinding
 
@@ -15,8 +19,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        val adapter = ImageRVAdapter()
+        val recyclerView = binding.recyclerView
+        imageAdapter = ImageRVAdapter(this.lifecycleScope)
+        recyclerView.apply{
+            adapter = imageAdapter
+            layoutManager = GridLayoutManager(context, 3) //TODO PAS EN HARDCODE LE 3 SVP
+        }
 
     }
 
