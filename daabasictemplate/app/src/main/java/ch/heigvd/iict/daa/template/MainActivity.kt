@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val recyclerView = binding.recyclerView
-        imageAdapter = ImageRVAdapter(this.lifecycleScope)
+        imageAdapter = ImageRVAdapter(this.lifecycleScope, cacheDir)
         recyclerView.apply{
             adapter = imageAdapter
             layoutManager = GridLayoutManager(context, 3) //TODO PAS EN HARDCODE LE 3 SVP

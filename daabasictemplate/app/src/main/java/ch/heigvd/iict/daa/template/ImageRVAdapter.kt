@@ -13,8 +13,12 @@ import ch.heigvd.iict.daa.template.databinding.NumberListBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
-class ImageRVAdapter(private val lifecycle: LifecycleCoroutineScope) : RecyclerView.Adapter<ImageRVAdapter.ViewHolder>() {
+class ImageRVAdapter(private val lifecycle: LifecycleCoroutineScope, private val cacheDir : File) : RecyclerView.Adapter<ImageRVAdapter.ViewHolder>() {
+
+    private val imageDownloader = ImageDownloader(cacheDir)
+
     override fun getItemCount() = 10000
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageRVAdapter.ViewHolder {
@@ -30,7 +34,7 @@ class ImageRVAdapter(private val lifecycle: LifecycleCoroutineScope) : RecyclerV
 
             lifecycle.launch {
                 //withContext avant ? mis par le prof au début
-                val image = ImageDownloader.getImage(position)
+                val image = imageDownloader.getImage(position)
                 withContext(Dispatchers.Main) {
                     binding.apply {
                         with(image){
